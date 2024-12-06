@@ -1,6 +1,6 @@
-# shellfie_dev
+# shelfie
 
-A new Flutter project.
+Shelfie app
 
 ## Getting Started
 
