@@ -7,23 +7,23 @@ class ProfileScreen extends StatelessWidget {
   final String name = "John Doe";
   final String favoriteGenre = "Fantasy";
   final String about = "Avid reader who loves exploring new worlds through books. Always on the lookout for a thrilling adventure or a heartwarming story.";
-  final List<Review> reviews = [
-    Review(
-      bookTitle: "The Hobbit",
+  final List<ReviewUser> reviews = [
+    ReviewUser(
+      title: "The Hobbit",
       author: "J.R.R. Tolkien",
-      reviewText: "An incredible journey through Middle-earth! A must-read for fantasy lovers.",
+      text: "An incredible journey through Middle-earth! A must-read for fantasy lovers.",
       rating: 5.0,
     ),
-    Review(
-      bookTitle: "To Kill a Mockingbird",
+    ReviewUser(
+      title: "To Kill a Mockingbird",
       author: "Harper Lee",
-      reviewText: "A powerful and thought-provoking novel that explores deep societal issues.",
+      text: "A powerful and thought-provoking novel that explores deep societal issues.",
       rating: 4.5,
     ),
-    Review(
-      bookTitle: "1984",
+    ReviewUser(
+      title: "1984",
       author: "George Orwell",
-      reviewText: "Chilling and gripping. A timeless classic that feels all too relevant.",
+      text: "Chilling and gripping. A timeless classic that feels all too relevant.",
       rating: 4.0,
     ),
   ];

@@ -109,7 +109,7 @@ class _SearchScreenState extends State<SearchScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   // Recent Searches
-                  Padding(
+                  const Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 16.0),
                     child: Text(
                       "Your Recent Searches",
@@ -133,8 +133,8 @@ class _SearchScreenState extends State<SearchScreen> {
                   ),
                   SizedBox(height: 16),
                   // Hot Searches
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                  const Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 16.0),
                     child: Text(
                       "Today's Hot Searches",
                       style: TextStyle(

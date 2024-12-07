@@ -1,13 +1,44 @@
-class Review {
-  final String bookTitle;
+class ReviewUser {
+  final String title;
   final String author;
-  final String reviewText;
+  final String text;
   final double rating;
 
-  Review({
-    required this.bookTitle,
+  ReviewUser({
+    required this.title,
     required this.author,
-    required this.reviewText,
+    required this.text,
     required this.rating,
   });
+
+  // Factory constructor to parse JSON data
+  factory ReviewUser.fromJson(Map<String, dynamic> json) {
+    return ReviewUser(
+      title: json['title'],
+      author: json['author'],
+      text: json['text'],
+      rating: json['rating'].toDouble(),
+    );
+  }
+}
+
+class ReviewBook {
+  final String username;
+  final double rating;
+  final String text;
+
+  ReviewBook({
+    required this.username,
+    required this.rating,
+    required this.text,
+  });
+
+  // Factory constructor to parse JSON data
+  factory ReviewBook.fromJson(Map<String, dynamic> json) {
+    return ReviewBook(
+      username: json['user name'],
+      rating: json['rating'].toDouble(),
+      text: json['text'],
+    );
+  }
 }

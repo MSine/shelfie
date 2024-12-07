@@ -22,10 +22,7 @@ class MyApp extends StatelessWidget {
       routes: {
         '/login': (context) => LoginScreen(),
         '/home': (context) => MainNavigationScreen(),
-        '/bookDetail': (context) => BookDetailScreen(
-          title: 'title',//title: ModalRoute.of(context)!.settings.arguments['title'],
-          author: 'author',//author: ModalRoute.of(context)!.settings.arguments['author'],
-        ),
+        '/bookDetail': (context) => BookDetailScreen(bookId: 1,),
         '/chat': (context) => MessagesListScreen(),
       },
     );
