@@ -18,7 +18,7 @@ class LoginScreen extends StatelessWidget {
               ElevatedButton(
                 onPressed: () {
                   // Call AuthService to login
-                  Navigator.pushReplacementNamed(context, '/nav');
+                  Navigator.pushReplacementNamed(context, '/home');
                 },
                 child: Text("Login with Google"),
               ),

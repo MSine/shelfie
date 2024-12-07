@@ -3,7 +3,6 @@ import 'screens/login_screen.dart';
 import 'screens/home_screen.dart';
 import 'screens/discovery_screen.dart';
 import 'screens/book_detail_screen.dart';
-import 'screens/chat_screen.dart';
 import 'screens/messages_screen.dart';
 import 'screens/profile_screen.dart';
 import 'widgets/navbar_bottom.dart';
@@ -22,7 +21,7 @@ class MyApp extends StatelessWidget {
       home: LoginScreen(),
       routes: {
         '/login': (context) => LoginScreen(),
-        '/nav': (context) => MainNavigationScreen(),
+        '/home': (context) => MainNavigationScreen(),
         '/bookDetail': (context) => BookDetailScreen(
           title: 'title',//title: ModalRoute.of(context)!.settings.arguments['title'],
           author: 'author',//author: ModalRoute.of(context)!.settings.arguments['author'],

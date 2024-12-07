@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'group_chat_screen.dart';
+import 'chat_screen.dart';
 
 class MessagesListScreen extends StatelessWidget {
   @override
@@ -43,7 +44,10 @@ class MessagesListScreen extends StatelessWidget {
             subtitle: Text(chat['lastMessage']),
             leading: CircleAvatar(child: Icon(Icons.person)),
             onTap: () {
-              //Navigator.pushNamed(context, '/chat', arguments: {'name': chat['name']});
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (_) => ChatScreen(name: chat['name'])),
+              );
             },
           )),
         ],
