@@ -3,6 +3,7 @@ import 'screens/login_screen.dart';
 import 'screens/home_screen.dart';
 import 'screens/book_detail_screen.dart';
 import 'screens/chat_screen.dart';
+import 'screens/messages_screen.dart';
 
 void main() {
   runApp(MyApp());
@@ -22,7 +23,7 @@ class MyApp extends StatelessWidget {
           title: 'title',//title: ModalRoute.of(context)!.settings.arguments['title'],
           author: 'author',//author: ModalRoute.of(context)!.settings.arguments['author'],
         ),
-        '/chat': (context) => ChatScreen(),
+        '/chat': (context) => MessagesListScreen(),
       },
     );
   }

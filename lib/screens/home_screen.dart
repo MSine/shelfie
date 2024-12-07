@@ -6,7 +6,7 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("BookMatch"),
+        title: Text("Shelfie"),
         actions: [
           IconButton(
             icon: Icon(Icons.chat),
