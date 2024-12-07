@@ -1,31 +1,24 @@
 import 'package:flutter/material.dart';
+import '../models/book_model.dart';
 
 class BookCard extends StatelessWidget {
-  final String title;
-  final String author;
-  final String imageUrl;
-  final double rating;
+  final Book book;
 
-  BookCard({
-    required this.title,
-    required this.author,
-    required this.imageUrl,
-    required this.rating,
-  });
+  const BookCard({Key? key, required this.book}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Card(
       child: ListTile(
-        leading: Image.network(imageUrl),
-        title: Text(title),
-        subtitle: Text("By $author"),
-        trailing: Text("${rating.toStringAsFixed(1)} ★"),
+        leading: Image.network(book.imageUrl),
+        title: Text(book.title),
+        subtitle: Text("By ${book.author}"),
+        trailing: Text("${book.rating.toStringAsFixed(1)} ★"),
         onTap: () {
           Navigator.pushNamed(
             context,
             '/bookDetail',
-            arguments: {'title': title, 'author': author},
+            arguments: {'title': book.title, 'author': book.author},
           );
         },
       ),
