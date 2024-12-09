@@ -13,7 +13,17 @@ class UserCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       child: ListTile(
-        leading: Image.network(user.imageUrl),
+        leading: Positioned(
+          top: 8,
+          left: MediaQuery
+              .of(context)
+              .size
+              .width / 2 - 24,
+          child: CircleAvatar(
+            radius: 24,
+            backgroundImage: NetworkImage(user.imageUrl),
+          ),
+        ),
         title: Text(user.name),
         subtitle: user.genre != "" ? Text("Genre: ${user.genre}") : null,
         onTap: () {

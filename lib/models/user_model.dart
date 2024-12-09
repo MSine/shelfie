@@ -38,17 +38,17 @@ class User implements Promotable {
 
   // Factory constructor to parse JSON data
   factory User.fromJson(Map<String, dynamic> json) {
-      return User(
-        id: json['id'],
-        name: json['name'],
-        imageUrl: json['pp'],
-        description: json['bio'],
-        genre: json['mostReadGenre'] ?? "",
-        reviews: json['reviews'] != null ? (json['reviews'] as List)
-            .map((reviewJson) => ReviewUser.fromJson(reviewJson))
-            .toList()
-            : null,
-      );
+    return User(
+      id: json['id'],
+      name: json['name'],
+      imageUrl: json['pp'],
+      description: json['bio'],
+      genre: json['mostReadGenre'] ?? "",
+      reviews: json['reviews'] != null ? (json['reviews'] as List)
+          .map((reviewJson) => ReviewUser.fromJson(reviewJson))
+          .toList()
+          : null,
+    );
   }
 
   // Fetch a user from the db
