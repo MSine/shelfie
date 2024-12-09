@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shelfie_app/models/user_model.dart';
 import '../widgets/review_card.dart';
-import 'dart:convert';
-import 'package:http/http.dart' as http; // For API calls
 
 class ProfileScreen extends StatefulWidget {
   final int userId;

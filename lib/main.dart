@@ -28,7 +28,7 @@ class MyApp extends StatelessWidget {
         '/login': (context) => LoginScreen(),
         '/home': (context) => MainNavigationScreen(),
         '/bookDetail': (context) => BookDetailScreen(bookId: 1,),
-        '/chat': (context) => MessagesListScreen(),
+        '/chat': (context) => MessagesListScreen(userId: 1,),
         '/userProfile': (context) => ProfileScreen(
           userId: (ModalRoute.of(context)!.settings.arguments! as Map)['userId'],
         ),
@@ -49,7 +49,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
     SearchScreen(),
     DiscoveryScreen(),
     HomeScreen(),
-    MessagesListScreen(),
+    MessagesListScreen(userId: 1,),
     ProfileScreen(userId: 1,),
   ];
 

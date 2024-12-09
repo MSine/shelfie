@@ -27,13 +27,10 @@ class _LoginScreenState extends State<LoginScreen> {
       final User? user = userCredential.user;
 
       if (user != null) {
-        // Navigate to the home screen or perform other actions
         Navigator.pushReplacementNamed(context, '/home');
       }
     } catch (error) {
-      // Handle sign-in errors
       print(error);
-      // You can display an error message to the user using a SnackBar or Dialog
     }
   }
   @override

@@ -1,56 +1,71 @@
 import 'package:flutter/material.dart';
+import '../models/message_model.dart';
 import 'group_chat_screen.dart';
 import 'chat_screen.dart';
 
-class MessagesListScreen extends StatelessWidget {
+class MessagesListScreen extends StatefulWidget {
+  final int userId;
+
+  const MessagesListScreen({
+    Key? key,
+    required this.userId
+  }) : super(key: key);
+
+  @override
+  _MessagesListScreenState createState() => _MessagesListScreenState();
+}
+
+class _MessagesListScreenState extends State<MessagesListScreen> {
+  late Future<List<MessageOverview>> _messageOverviewsFuture;
+
+  @override
+  void initState() {
+    super.initState();
+    _messageOverviewsFuture = MessageOverview.fetchMessageOverviews(widget.userId);
+  }
+
   @override
   Widget build(BuildContext context) {
-    // Sample data for groups and DMs
-    final List<Map<String, dynamic>> groupChats = [
-      {'name': 'Book Lovers', 'lastMessage': 'Did you read the latest release?'},
-      {'name': 'Sci-Fi Fans', 'lastMessage': 'The new movie was amazing!'}
-    ];
-    final List<Map<String, dynamic>> dms = [
-      {'name': 'Alice', 'lastMessage': 'Hey! What are you reading?'},
-      {'name': 'Bob', 'lastMessage': 'Can you recommend a thriller?'}
-    ];
-
     return Scaffold(
-      appBar: AppBar(title: Text("Messages")),
-      body: ListView(
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text("Group Chats", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-          ),
-          ...groupChats.map((chat) => ListTile(
-            title: Text(chat['name']),
-            subtitle: Text(chat['lastMessage']),
-            leading: CircleAvatar(child: Icon(Icons.group)),
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (_) => GroupChatScreen(groupName: chat['name'])),
+      appBar: AppBar(
+          title: Text("Messages")
+      ),
+      body: FutureBuilder<List<MessageOverview>>(
+        future: _messageOverviewsFuture,
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Center(child: CircularProgressIndicator());
+          } else if (snapshot.hasError) {
+            return Center(child: Text("Error: ${snapshot.error}"));
+          } else if (!snapshot.hasData) {
+            return Center(child: Text("Book details not available"));
+          }
+
+          final messageOverviews = snapshot.data!;
+          return ListView.builder(
+            itemCount: messageOverviews.length,
+            itemBuilder: (context, index) {
+              final messageOverview = messageOverviews[index];
+              return ListTile(
+                title: Text(messageOverview.name),
+                subtitle: Text(
+                  messageOverview.isGroup
+                      ? '${messageOverview.lastMessageSender}: ${messageOverview.lastMessage}'
+                      : messageOverview.lastMessage,
+                  overflow: TextOverflow.ellipsis,
+                ),
+                leading: CircleAvatar(
+                  backgroundImage: NetworkImage(messageOverview.imageUrl),
+                ),
+                onTap: () {
+                  // Handle navigation to chat screen here
+                  // You can use Navigator.push to navigate to a new screen
+                  // based on messageOverview.id or other relevant data
+                },
               );
             },
-          )),
-          Divider(),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text("Direct Messages", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-          ),
-          ...dms.map((chat) => ListTile(
-            title: Text(chat['name']),
-            subtitle: Text(chat['lastMessage']),
-            leading: CircleAvatar(child: Icon(Icons.person)),
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (_) => ChatScreen(name: chat['name'])),
-              );
-            },
-          )),
-        ],
+          );
+        }
       ),
     );
   }
