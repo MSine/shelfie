@@ -14,8 +14,8 @@ class ReviewUser {
   // Factory constructor to parse JSON data
   factory ReviewUser.fromJson(Map<String, dynamic> json) {
     return ReviewUser(
-      title: json['title'],
-      author: json['author'],
+      title: json['bookTitle'],
+      author: json['bookAuthor'] ?? "Unknown",
       text: json['text'],
       rating: json['rating'].toDouble(),
     );

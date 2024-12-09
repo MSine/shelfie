@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shelfie_app/widgets/user_card.dart';
 import '../models/group_model.dart';
 
 class GroupDetailsCard extends StatelessWidget {
@@ -43,7 +44,7 @@ class GroupDetailsCard extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16),
             child: Text(
-              "Members: ${group.members.length}, Online: ${group.onlineUsers}",
+              "Members: ${group.members.length}",
               style: TextStyle(fontSize: 14, color: Colors.grey[600]),
             ),
           ),
@@ -66,17 +67,33 @@ class GroupDetailsCard extends StatelessWidget {
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.red,
                   ),
-                  child: Text("Decline"),
+                  child: Text("Move on"),
                 ),
                 ElevatedButton(
                   onPressed: onAccept,
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.green,
                   ),
-                  child: Text("Accept"),
+                  child: Text("Request"),
                 ),
               ],
             ),
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+            child: Text(
+              "Members",
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            ),
+          ),
+          SizedBox(height: 8),
+          ListView.builder(
+            shrinkWrap: true,
+            physics: NeverScrollableScrollPhysics(),
+            itemCount: group.members.length,
+            itemBuilder: (context, index) {
+              return UserCard(user: group.members[index],);
+            },
           ),
         ],
       ),

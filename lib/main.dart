@@ -42,7 +42,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
     DiscoveryScreen(),
     HomeScreen(),
     MessagesListScreen(),
-    ProfileScreen(),
+    ProfileScreen(userId: 1,),
   ];
 
   void _onNavBarTap(int index) {
