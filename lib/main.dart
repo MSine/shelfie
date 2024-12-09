@@ -7,8 +7,12 @@ import 'screens/messages_screen.dart';
 import 'screens/profile_screen.dart';
 import 'widgets/navbar_bottom.dart';
 import 'screens/search_screen.dart';
+import 'package:firebase_core/firebase_core.dart';
+//import 'firebase_options.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(MyApp());
 }
 

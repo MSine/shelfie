@@ -25,7 +25,7 @@ class UserCard extends StatelessWidget {
           ),
         ),
         title: Text(user.name),
-        subtitle: user.genre != "" ? Text("Genre: ${user.genre}") : null,
+        subtitle: user.genre != null ? Text("Genre: ${user.genre}") : null,
         onTap: () {
           Navigator.pushNamed(
             context,

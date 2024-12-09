@@ -24,7 +24,7 @@ class User implements Promotable {
   final String name;
   final String imageUrl;
   final String description;
-  final String genre;
+  final String? genre;
   final List<ReviewUser>? reviews;
 
   User({
@@ -32,7 +32,7 @@ class User implements Promotable {
     required this.name,
     required this.description,
     required this.imageUrl,
-    required this.genre,
+    this.genre,
     this.reviews
   });
 
@@ -43,7 +43,7 @@ class User implements Promotable {
       name: json['name'],
       imageUrl: json['pp'],
       description: json['bio'],
-      genre: json['mostReadGenre'] ?? "",
+      genre: json['mostReadGenre'],
       reviews: json['reviews'] != null ? (json['reviews'] as List)
           .map((reviewJson) => ReviewUser.fromJson(reviewJson))
           .toList()
