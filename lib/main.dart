@@ -18,12 +18,16 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Shelfie',
       theme: ThemeData(primarySwatch: Colors.blue),
-      home: LoginScreen(),
+      //home: LoginScreen(),
+      initialRoute: '/login',
       routes: {
         '/login': (context) => LoginScreen(),
         '/home': (context) => MainNavigationScreen(),
         '/bookDetail': (context) => BookDetailScreen(bookId: 1,),
         '/chat': (context) => MessagesListScreen(),
+        '/userProfile': (context) => ProfileScreen(
+          userId: (ModalRoute.of(context)!.settings.arguments! as Map)['userId'],
+        ),
       },
     );
   }

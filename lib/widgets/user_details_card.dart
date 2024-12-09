@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:shelfie_app/widgets/user_card.dart';
-import '../models/group_model.dart';
+import 'package:shelfie_app/widgets/review_card.dart';
 import '../models/user_model.dart';
 
-class GroupDetailsCard extends StatelessWidget {
-  final Group group;
+class UserDetailsCard extends StatelessWidget {
+  final User user;
   final VoidCallback onAccept;
   final VoidCallback onDecline;
 
-  const GroupDetailsCard({
+  const UserDetailsCard({
     Key? key,
-    required this.group,
+    required this.user,
     required this.onAccept,
     required this.onDecline,
   }) : super(key: key);
@@ -28,7 +27,7 @@ class GroupDetailsCard extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.all(16.0),
             child: Text(
-              group.name,
+              user.name,
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
           ),
@@ -36,16 +35,15 @@ class GroupDetailsCard extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16),
             child: Text(
-              group.description,
+              user.description,
               style: TextStyle(fontSize: 16, color: Colors.grey[700]),
             ),
           ),
           SizedBox(height: 10),
-          // Group Stats
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16),
             child: Text(
-              "Members: ${group.members.length}",
+              "Most Read Genre: ${user.genre}",
               style: TextStyle(fontSize: 14, color: Colors.grey[600]),
             ),
           ),
@@ -76,7 +74,7 @@ class GroupDetailsCard extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16.0),
             child: Text(
-              "Members",
+              "Reviews",
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
           ),
@@ -84,25 +82,9 @@ class GroupDetailsCard extends StatelessWidget {
           ListView.builder(
             shrinkWrap: true,
             physics: NeverScrollableScrollPhysics(),
-            itemCount: group.members.length,
+            itemCount: user.reviews?.length,
             itemBuilder: (context, index) {
-              // Use FutureBuilder to resolve Future<User> into User
-              return FutureBuilder<User>(
-                future: group.members[index],
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return CircularProgressIndicator();
-                  } else if (snapshot.hasError) {
-                    return Text("Error loading user: ${snapshot.error}");
-                  } else if (!snapshot.hasData) {
-                    return Text("No user data available");
-                  } else {
-                    return UserCard(
-                      user: snapshot.data!,
-                    );
-                  }
-                },
-              );
+              return ReviewCard(review: user.reviews?[index],);
             },
           ),
         ],

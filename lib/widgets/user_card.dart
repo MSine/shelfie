@@ -4,7 +4,10 @@ import '../models/user_model.dart';
 class UserCard extends StatelessWidget {
   final User user;
 
-  const UserCard({Key? key, required this.user}) : super(key: key);
+  const UserCard({
+    Key? key,
+    required this.user,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -12,12 +15,12 @@ class UserCard extends StatelessWidget {
       child: ListTile(
         leading: Image.network(user.imageUrl),
         title: Text(user.name),
-        subtitle: Text("Genre: ${user.genre}"),
+        subtitle: user.genre != "" ? Text("Genre: ${user.genre}") : null,
         onTap: () {
           Navigator.pushNamed(
             context,
-            '/user',
-            arguments: {'title': user.id},
+            '/userProfile',
+            arguments: {'userId': user.id},
           );
         },
       ),

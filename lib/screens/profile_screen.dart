@@ -19,17 +19,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   void initState() {
     super.initState();
-    _userFuture = fetchUser(widget.userId);
-  }
-
-  Future<User> fetchUser(int userId) async {
-    final response = await http.get(Uri.parse('http://10.0.2.2:8080/api/user/$userId'));
-    if (response.statusCode == 200) {
-      final data = json.decode(response.body);
-      return User.fromJson(data);
-    } else {
-      throw Exception('Failed to load book details');
-    }
+    _userFuture = User.fetchUser(widget.userId);
   }
 
   @override
@@ -129,7 +119,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             ),
           );
         }
-        ),
+      ),
     );
   }
 }

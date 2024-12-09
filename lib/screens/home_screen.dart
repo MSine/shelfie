@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../models/group_model.dart';
-import '../widgets/group_details_card.dart';
+import 'package:shelfie_app/models/user_model.dart';
+import '../widgets/promoted_card.dart';
 import '../services/promoted_groups_service.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -9,48 +9,58 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  final List<Group> _promotedGroups = PromotedGroupsService.getPromotedGroups();
-  int _currentIndex = 0;
+  late Future<Promotable> _promotable;
+
+  @override
+  void initState() {
+    super.initState();
+    setState(() {
+      _promotable = PromotedService.getPromotable();
+    });
+  }
+
+  Future<void> _getNextItem() async {
+    setState(() {
+      _promotable = PromotedService.getNextPromotable();
+    });
+  }
 
   void _handleAccept() {
     // Logic for accepting the group
-    final acceptedGroup = _promotedGroups[_currentIndex];
-    print("Accepted: ${acceptedGroup.name}");
-    _moveToNextGroup();
+    _getNextItem();
   }
 
   void _handleDecline() {
     // Logic for declining the group
-    print("Declined: ${_promotedGroups[_currentIndex].name}");
-    _moveToNextGroup();
-  }
-
-  void _moveToNextGroup() {
-    setState(() {
-      if (_currentIndex < _promotedGroups.length - 1) {
-        _currentIndex++;
-      } else {
-        // No more groups
-        _currentIndex = 0;
-        // Alternatively, show a message or reload more groups
-      }
-    });
+    _getNextItem();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Home"),
+        title: Text("Profile"),
       ),
-      body: Center(
-        child: _promotedGroups.isEmpty
-            ? Text("No promoted groups available")
-            : GroupDetailsCard(
-          group: _promotedGroups[_currentIndex],
-          onAccept: _handleAccept,
-          onDecline: _handleDecline,
-        ),
+      body: FutureBuilder<Promotable>(
+        future: _promotable,
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return CircularProgressIndicator();
+          } else if (snapshot.hasError) {
+            return Text("Error loading promotable");
+          } else if (!snapshot.hasData) {
+            return Text("No promotable available");
+          } else {
+            final promotable = snapshot.data!;
+            return SingleChildScrollView(
+              child: PromotedCard(
+                promotable: promotable,
+                onAccept: _handleAccept,
+                onDecline: _handleDecline,
+              ),
+            );
+          }
+        }
       ),
     );
   }
