@@ -27,53 +27,18 @@ class _SearchScreenState extends State<SearchScreen> {
     "The Alchemist"
   ];
 
-  final List<Book> _books = [
-    Book(
-      title: "The Hobbit",
-      author: "J.R.R. Tolkien",
-      imageUrl: "https://via.placeholder.com/50x70",
-      rating: 3.5,
-    ),
-    Book(
-      title: "1984",
-      author: "George Orwell",
-      imageUrl: "https://via.placeholder.com/50x70",
-      rating: 3.5,
-    ),
-    Book(
-      title: "Dune",
-      author: "Frank Herbert",
-      imageUrl: "https://via.placeholder.com/50x70",
-      rating: 3.5,
-    ),
-    Book(
-      title: "Pride and Prejudice",
-      author: "Jane Austen",
-      imageUrl: "https://via.placeholder.com/50x70",
-      rating: 3.5,
-    ),
-    Book(
-      title: "The Catcher in the Rye",
-      author: "J.D. Salinger",
-      imageUrl: "https://via.placeholder.com/50x70",
-      rating: 3.5,
-    ),
-  ];
+  List<Book> _books = [];
 
-  List<Book> _filteredBooks = [];
-
-  void _onSearchChanged(String query) {
+  void _onSearchChanged(String query) async {
+    late List<Book> books = [];
+    if (query.isEmpty) {
+      books = [];
+    } else {
+      books = await Book.fetchBookSearch(query);
+    }
     setState(() {
       _searchQuery = query;
-      if (query.isEmpty) {
-        _filteredBooks.clear();
-      } else {
-        _filteredBooks = _books
-            .where((book) =>
-        book.title.toLowerCase().contains(query.toLowerCase()) ||
-            book.author.toLowerCase().contains(query.toLowerCase()))
-            .toList();
-      }
+      _books = books;
     });
   }
 
@@ -159,9 +124,9 @@ class _SearchScreenState extends State<SearchScreen> {
               ),
             )
                 : ListView.builder(
-              itemCount: _filteredBooks.length,
+              itemCount: _books.length,
               itemBuilder: (context, index) {
-                return BookCard(book: _filteredBooks[index]);
+                return BookCard(book: _books[index]);
               },
             ),
           ),

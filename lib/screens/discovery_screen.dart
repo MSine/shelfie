@@ -14,6 +14,7 @@ class DiscoveryScreen extends StatelessWidget {
         children: [
           BookCard(
             book: Book(
+              id: 1,
               title: "Book Title",
               author: "Author Name",
               imageUrl: "https://cataas.com/cat",

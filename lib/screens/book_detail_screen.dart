@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'dart:convert'; // For API parsing
-import 'package:http/http.dart' as http; // For API calls
 import '../models/book_model.dart';
-import '../models/review_model.dart';
 import '../widgets/review_card.dart';
 
 class BookDetailScreen extends StatefulWidget {
@@ -21,48 +18,8 @@ class _BookDetailScreenState extends State<BookDetailScreen> {
   @override
   void initState() {
     super.initState();
-    _bookFuture = fetchBook(widget.bookId);
+    _bookFuture = Book.fetchBook(widget.bookId);
   }
-
-  Future<Book> fetchBook(int bookId) async {
-    // Simulate a network delay
-    await Future.delayed(Duration(seconds: 2));
-
-    // Return mock data
-    return Book(
-      title: "The Great Gatsby",
-      author: "F. Scott Fitzgerald",
-      imageUrl: "https://cataas.com/cat",
-      rating: 4.5,
-      reviews: [
-        ReviewBook(
-          username: "JaneDoe",
-          rating: 4.0,
-          text: "An absolute classic. Loved the characters and setting!",
-        ),
-        ReviewBook(
-          username: "JohnSmith",
-          rating: 5.0,
-          text: "One of the best books I've ever read. A masterpiece!",
-        ),
-        ReviewBook(
-          username: "Reader101",
-          rating: 3.5,
-          text: "Good book, but a bit overrated in my opinion.",
-        ),
-      ],
-    );
-    /*Future<Book> fetchBook(int bookId) async {
-      final response = await http.get(Uri.parse('api/book/$bookId'));
-      if (response.statusCode == 200) {
-        final data = json.decode(response.body);
-        return Book.fromJson(data);
-      } else {
-        throw Exception('Failed to load book details');
-      }
-    }*/
-  }
-
 
   @override
   Widget build(BuildContext context) {
@@ -87,13 +44,13 @@ class _BookDetailScreenState extends State<BookDetailScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 // Book Cover
-                Image.network(
+                /*Image.network(
                   book.imageUrl,
                   width: double.infinity,
                   height: 300,
                   fit: BoxFit.cover,
                 ),
-                SizedBox(height: 16),
+                SizedBox(height: 16),*/
                 // Title and Author
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16.0),

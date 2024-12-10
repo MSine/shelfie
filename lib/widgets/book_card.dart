@@ -13,7 +13,7 @@ class BookCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       child: ListTile(
-        leading: ClipRRect(
+        /*leading: ClipRRect(
           borderRadius: BorderRadius.circular(4.0),
           child: Container(
             height: 60.0,
@@ -21,15 +21,15 @@ class BookCard extends StatelessWidget {
             color: Color(0xffffff),
             child: Image.network(book.imageUrl),
           ),
-        ),
+        ),*/
         title: Text(book.title),
         subtitle: Text("By ${book.author}"),
-        trailing: Text("${book.rating.toStringAsFixed(1)} ★"),
+        //trailing: Text("${book.rating.toStringAsFixed(1)} ★"),
         onTap: () {
           Navigator.pushNamed(
             context,
             '/bookDetail',
-            arguments: {'title': book.title, 'author': book.author},
+            arguments: {'bookId': book.id},
           );
         },
       ),

@@ -28,7 +28,9 @@ class MyApp extends StatelessWidget {
       routes: {
         '/login': (context) => LoginScreen(),
         '/home': (context) => MainNavigationScreen(),
-        '/bookDetail': (context) => BookDetailScreen(bookId: 1,),
+        '/bookDetail': (context) => BookDetailScreen(
+          bookId: (ModalRoute.of(context)!.settings.arguments! as Map)['bookId'],
+        ),
         '/messages': (context) => MessagesListScreen(userId: 1,),
         '/chat': (context) => ChatScreen(
           userId: (ModalRoute.of(context)!.settings.arguments! as Map)['userId'],
