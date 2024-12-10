@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shelfie_app/screens/chat_screen.dart';
+import 'package:shelfie_app/screens/group_profile_screen.dart';
 import 'screens/login_screen.dart';
 import 'screens/home_screen.dart';
 import 'screens/discovery_screen.dart';
@@ -37,6 +38,9 @@ class MyApp extends StatelessWidget {
         ),
         '/userProfile': (context) => ProfileScreen(
           userId: (ModalRoute.of(context)!.settings.arguments! as Map)['userId'],
+        ),
+        '/groupProfile': (context) => GroupProfileScreen(
+          groupId: (ModalRoute.of(context)!.settings.arguments! as Map)['groupId'],
         ),
       },
     );

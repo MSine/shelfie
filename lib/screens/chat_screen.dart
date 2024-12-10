@@ -100,11 +100,20 @@ class _ChatScreenState extends State<ChatScreen> {
       appBar: AppBar(
         title: GestureDetector(
           onTap: () => {
-            Navigator.pushNamed(context, '/userProfile',
-              arguments: {
-                'userId' : widget.otherId,
-              }
-            ),
+            if (widget.isGroup) {
+              Navigator.pushNamed(context, '/groupProfile',
+                arguments: {
+                  'groupId' : widget.otherId,
+                }
+              ),
+            }
+            else {
+              Navigator.pushNamed(context, '/userProfile',
+                  arguments: {
+                    'userId': widget.otherId,
+                  }
+              ),
+            }
           },
           child: Text(widget.name,),
         ),

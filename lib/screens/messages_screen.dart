@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import '../models/message_model.dart';
-import 'group_chat_screen.dart';
-import 'chat_screen.dart';
 
 class MessagesListScreen extends StatefulWidget {
   final int userId;
