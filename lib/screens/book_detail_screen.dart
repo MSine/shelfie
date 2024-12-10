@@ -1,12 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:shelfie_app/models/review_model.dart';
 import '../models/book_model.dart';
 import '../widgets/review_card.dart';
 
 class BookDetailScreen extends StatefulWidget {
+  final int userId;
   final int bookId;
 
-  const BookDetailScreen({Key? key, required this.bookId}) : super(key: key);
+  const BookDetailScreen({
+    Key? key,
+    required this.userId,
+    required this.bookId,
+  }) : super(key: key);
 
   @override
   _BookDetailScreenState createState() => _BookDetailScreenState();
@@ -19,6 +25,69 @@ class _BookDetailScreenState extends State<BookDetailScreen> {
   void initState() {
     super.initState();
     _bookFuture = Book.fetchBook(widget.bookId);
+  }
+
+  void _addReview(double rating, String text) async {
+    ReviewBook.postReview(widget.bookId, widget.userId, rating, text);
+
+    setState(() {
+      _bookFuture = Book.fetchBook(widget.bookId);
+    });
+  }
+
+  void _openAddReviewDialog() {
+    showDialog(
+      context: context,
+      builder: (context) {
+        double rating = 0;
+        String reviewText = "";
+
+        return AlertDialog(
+          title: Text("Add Review"),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              RatingBar.builder(
+                initialRating: 2.5,
+                minRating: 0,
+                direction: Axis.horizontal,
+                allowHalfRating: true,
+                itemCount: 5,
+                itemBuilder: (context, _) => Icon(
+                  Icons.star,
+                  color: Colors.amber,
+                ),
+                onRatingUpdate: (value) {
+                  rating = value;
+                },
+              ),
+              TextField(
+                maxLines: 3,
+                decoration: InputDecoration(
+                  hintText: "Write your review...",
+                ),
+                onChanged: (value) {
+                  reviewText = value;
+                },
+              ),
+            ],
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(context),
+              child: Text("Cancel"),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.pop(context);
+                _addReview(rating, reviewText);
+              },
+              child: Text("Send"),
+            ),
+          ],
+        );
+      },
+    );
   }
 
   @override
@@ -89,9 +158,18 @@ class _BookDetailScreenState extends State<BookDetailScreen> {
                 // Reviews
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                  child: Text(
-                    "Reviews",
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        "Reviews",
+                        style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                      ),
+                      IconButton(
+                        icon: Icon(Icons.add),
+                        onPressed: _openAddReviewDialog,
+                      ),
+                    ],
                   ),
                 ),
                 ListView.builder(

@@ -26,7 +26,7 @@ class Book {
       title: json['name'],
       author: json['author'] ?? 'Unknown',
       imageUrl: json['cover_img'] ?? '',
-      rating: json.containsKey('rating') ? json['rating'].toDouble() : 0,
+      rating: json.containsKey('rating') ? json['rating'].toDouble() / 2 : 0,
       reviews: json.containsKey('reviews') ? (json['reviews'] as List)
           .map((reviewJson) => ReviewBook.fromJson(reviewJson))
           .toList()
