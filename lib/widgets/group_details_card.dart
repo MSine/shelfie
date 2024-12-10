@@ -45,7 +45,7 @@ class GroupDetailsCard extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16),
             child: Text(
-              "Members: ${group.members.length}",
+              "Members: ${group.members?.length}",
               style: TextStyle(fontSize: 14, color: Colors.grey[600]),
             ),
           ),
@@ -84,11 +84,11 @@ class GroupDetailsCard extends StatelessWidget {
           ListView.builder(
             shrinkWrap: true,
             physics: NeverScrollableScrollPhysics(),
-            itemCount: group.members.length,
+            itemCount: group.members?.length,
             itemBuilder: (context, index) {
               // Use FutureBuilder to resolve Future<User> into User
               return FutureBuilder<User>(
-                future: group.members[index],
+                future: group.members?[index],
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return CircularProgressIndicator();

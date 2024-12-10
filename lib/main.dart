@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shelfie_app/screens/chat_screen.dart';
 import 'screens/login_screen.dart';
 import 'screens/home_screen.dart';
 import 'screens/discovery_screen.dart';
@@ -8,7 +9,6 @@ import 'screens/profile_screen.dart';
 import 'widgets/navbar_bottom.dart';
 import 'screens/search_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
-//import 'firebase_options.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -28,7 +28,13 @@ class MyApp extends StatelessWidget {
         '/login': (context) => LoginScreen(),
         '/home': (context) => MainNavigationScreen(),
         '/bookDetail': (context) => BookDetailScreen(bookId: 1,),
-        '/chat': (context) => MessagesListScreen(userId: 1,),
+        '/messages': (context) => MessagesListScreen(userId: 1,),
+        '/chat': (context) => ChatScreen(
+          userId: (ModalRoute.of(context)!.settings.arguments! as Map)['userId'],
+          isGroup: (ModalRoute.of(context)!.settings.arguments! as Map)['isGroup'],
+          otherId: (ModalRoute.of(context)!.settings.arguments! as Map)['otherId'],
+          name: (ModalRoute.of(context)!.settings.arguments! as Map)['name'],
+        ),
         '/userProfile': (context) => ProfileScreen(
           userId: (ModalRoute.of(context)!.settings.arguments! as Map)['userId'],
         ),

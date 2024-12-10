@@ -1,16 +1,54 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import '../models/user_model.dart';
+import '../models/group_model.dart';
 
-class Message {
-  final int senderId;
-  final String content;
-  final DateTime timestamp;
+class MessageModel {
+  final int sender;
+  final String? senderName;
+  final String text;
+  final String time;
 
-  Message({
-    required this.senderId,
-    required this.content,
-    required this.timestamp
+  MessageModel({
+    required this.sender,
+    this.senderName,
+    required this.text,
+    required this.time,
   });
+
+  // Factory constructor to parse JSON data
+  factory MessageModel.fromJson(Map<String, dynamic> json) {
+    return MessageModel(
+      sender: json['sender'],
+      senderName: json['senderName'],
+      text: json['text'],
+      time: json['time'],
+    );
+  }
+
+  // Fetch from the db
+  static Future<(Promotable, List<MessageModel>)> fetchMessages(int userId, int otherId, bool isGroup) async {
+    final response = isGroup
+        ? await http.get(Uri.parse('http://10.0.2.2:8080/api/messages/group/$userId/$otherId'))
+        : await http.get(Uri.parse('http://10.0.2.2:8080/api/messages/user/$userId/$otherId'));
+    if (response.statusCode == 200) {
+      final data = json.decode(response.body);
+      if (data.containsKey('partner')) {
+        return (
+          User.fromJson(data['partner']),
+          List<MessageModel>.from((data['messages'] as List)
+              .map((mess) => MessageModel.fromJson(mess)))
+        );
+      }
+      return (
+        Group.fromJson(data['group']),
+        List<MessageModel>.from((data['messages'] as List)
+            .map((mess) => MessageModel.fromJson(mess)))
+      );
+    } else {
+      throw Exception('Failed to load message overviews');
+    }
+  }
 }
 
 class MessageOverview {
@@ -45,7 +83,7 @@ class MessageOverview {
     );
   }
 
-  // Fetch a user from the db
+  // Fetch overviews from the db
   static Future<List<MessageOverview>> fetchMessageOverviews(int userId) async {
     final response = await http.get(Uri.parse('http://10.0.2.2:8080/api/messages/overview/$userId'));
     if (response.statusCode == 200) {

@@ -58,9 +58,15 @@ class _MessagesListScreenState extends State<MessagesListScreen> {
                   backgroundImage: NetworkImage(messageOverview.imageUrl),
                 ),
                 onTap: () {
-                  // Handle navigation to chat screen here
-                  // You can use Navigator.push to navigate to a new screen
-                  // based on messageOverview.id or other relevant data
+                  Navigator.pushNamed(
+                    context,
+                    '/chat',
+                    arguments: {
+                      'userId' : widget.userId,
+                      'isGroup': messageOverview.isGroup,
+                      'otherId': messageOverview.id,
+                      'name': messageOverview.name},
+                  );
                 },
               );
             },

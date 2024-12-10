@@ -58,7 +58,7 @@ class User implements Promotable {
       final data = json.decode(response.body);
       return User.fromJson(data);
     } else {
-      throw Exception('Failed to load book details');
+      throw Exception('Failed to load user');
     }
   }
 }

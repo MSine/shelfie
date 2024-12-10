@@ -7,14 +7,14 @@ class Group implements Promotable {
   final String name;
   final String imageUrl;
   final String description;
-  final List<Future<User>> members;
+  final List<Future<User>>? members;
 
   Group({
     required this.id,
     required this.name,
     required this.imageUrl,
     required this.description,
-    required this.members,
+    this.members,
   });
   //Factory constructor to parse JSON data
   factory Group.fromJson(Map<String, dynamic> json) {
@@ -23,9 +23,10 @@ class Group implements Promotable {
       name: json['name'],
       imageUrl: json['pp'],
       description: json['bio'] ?? "No description",
-      members: (json['members'] as List)
+      members: json.containsKey('members') ? (json['members'] as List)
           .map((reviewJson) async => User.fromJson(reviewJson))
-          .toList(),
+          .toList()
+          : null,
     );
   }
 
@@ -36,7 +37,7 @@ class Group implements Promotable {
       final data = json.decode(response.body);
       return Group.fromJson(data);
     } else {
-      throw Exception('Failed to load book details');
+      throw Exception('Failed to load group');
     }
   }
 }
