@@ -63,11 +63,12 @@ class User implements Promotable {
     }
   }
 
-  static void postEdit(String description) {
+  static void postEdit(String name, String description, String image) {
     final Map<String, dynamic> jsonMap = {
       'id': MyApp.userId,
+      'name': name,
       'bio': description,
-      'pp': '',
+      'pp': image,
     };
     http.post(
         Uri.parse('http://10.0.2.2:8080/api/user/edit/profile'),

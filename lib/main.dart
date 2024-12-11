@@ -3,6 +3,7 @@ import 'package:shelfie_app/screens/chat_screen.dart';
 import 'package:shelfie_app/screens/group_create_screen.dart';
 import 'package:shelfie_app/screens/group_profile_screen.dart';
 import 'screens/login_screen.dart';
+import 'screens/register_screen.dart';
 import 'screens/home_screen.dart';
 import 'screens/discovery_screen.dart';
 import 'screens/book_detail_screen.dart';
@@ -31,6 +32,9 @@ class MyApp extends StatelessWidget {
       initialRoute: '/login',
       routes: {
         '/login': (context) => LoginScreen(),
+        '/register': (context) => RegisterScreen(
+          userId: (ModalRoute.of(context)!.settings.arguments! as Map)['userId'],
+        ),
         '/home': (context) => MainNavigationScreen(),
         '/bookDetail': (context) => BookDetailScreen(
           bookId: (ModalRoute.of(context)!.settings.arguments! as Map)['bookId'],

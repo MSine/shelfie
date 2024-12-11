@@ -43,11 +43,11 @@ class Group implements Promotable {
   }
 
   // Fetch a user from the db
-  static void postCreateGroup(String name, String description, List<int> genres) {
+  static void postCreateGroup(String name, String description, String image, List<int> genres) {
     final Map<String, dynamic> jsonMap = {
       'adminId': MyApp.userId,
       'name': name,
-      'pp': '',
+      'pp': image,
       'bio': description,
       'genres': genres,
     };

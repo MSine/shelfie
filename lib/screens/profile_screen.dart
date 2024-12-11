@@ -21,27 +21,70 @@ class _ProfileScreenState extends State<ProfileScreen> {
     _userFuture = User.fetchUser(widget.userId);
   }
 
-  void _editProfile(String description) async {
-    User.postEdit(description);
-
+  void _editProfile(String name, String description, String image) async {
+    User.postEdit(name, description, image);
+    await Future.delayed(Duration(seconds: 1));
     setState(() {
       _userFuture = User.fetchUser(widget.userId);
     });
   }
 
-  void _openEditDialog() {
+  void _openEditDialog(String name, String description, String image) {
+    if (MyApp.userId != widget.userId) {
+      return;
+    }
     showDialog(
       context: context,
       builder: (context) {
-        String description = "";
-
         return AlertDialog(
-          title: Text("Edit Bio"),
+          title: Text("Edit Profile"),
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              TextField(
-                maxLines: 3,
+              // Name
+              const Text(
+                'Your name:',
+                style: TextStyle(
+                    fontSize: 18, fontWeight: FontWeight.bold
+                ),
+              ),
+              TextFormField(
+                initialValue: name,
+                maxLines: 1,
+                decoration: InputDecoration(
+                  hintText: "Write about yourself",
+                ),
+                onChanged: (value) {
+                  name = value;
+                },
+              ),
+              // Image
+              const Text(
+                'Your Profile Photo:',
+                style: TextStyle(
+                    fontSize: 18, fontWeight: FontWeight.bold
+                ),
+              ),
+              TextFormField(
+                initialValue: image,
+                maxLines: 1,
+                decoration: InputDecoration(
+                  hintText: "Enter a url",
+                ),
+                onChanged: (value) {
+                  image = value;
+                },
+              ),
+              // Description
+              const Text(
+                'About you:',
+                style: TextStyle(
+                    fontSize: 18, fontWeight: FontWeight.bold
+                ),
+              ),
+              TextFormField(
+                initialValue: description,
+                maxLines: 4,
                 decoration: InputDecoration(
                   hintText: "Write about yourself",
                 ),
@@ -59,7 +102,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             ElevatedButton(
               onPressed: () {
                 Navigator.pop(context);
-                _editProfile(description);
+                _editProfile(name, description, image);
               },
               child: Text("Send"),
             ),
@@ -74,13 +117,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text("Profile"),
-        actions:
-        MyApp.userId == widget.userId ? [
-          IconButton(
-            icon: Icon(Icons.edit),
-            onPressed: _openEditDialog,
-          ),
-        ] : null,
       ),
       body: FutureBuilder<User>(
         future: _userFuture,
@@ -119,18 +155,28 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     ),
                   ],
                 ),
-                SizedBox(height: 60),
+                SizedBox(height: 16),
                 // Name and Descriptions
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16.0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        user.name,
-                        style: TextStyle(
-                            fontSize: 24, fontWeight: FontWeight.bold),
+                      Row(
+                        children: [
+                          Text(
+                            user.name,
+                            style: TextStyle(
+                                fontSize: 24, fontWeight: FontWeight.bold),
+                          ),
+                          IconButton(
+                            icon: Icon(Icons.edit),
+                            onPressed: () => _openEditDialog(user.name, user.description, user.imageUrl),
+                          ),
+
+                        ],
                       ),
+
                       SizedBox(height: 8),
                       Text(
                         "Favorite Genre: ${user.genre}",

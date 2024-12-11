@@ -23,6 +23,27 @@ class UserDetailsCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          Stack(
+            children: [
+              Container(
+                width: double.infinity,
+                height: 220,
+                color: Colors.blue[100],
+              ),
+              Positioned(
+                top: 10,
+                left: MediaQuery
+                    .of(context)
+                    .size
+                    .width / 2 - 116,
+                child: CircleAvatar(
+                  radius: 100,
+                  backgroundImage: NetworkImage(user.imageUrl),
+                ),
+              ),
+            ],
+          ),
+          SizedBox(height: 8),
           // Group Name
           Padding(
             padding: const EdgeInsets.all(16.0),

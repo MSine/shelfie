@@ -11,6 +11,7 @@ class GroupCreateScreen extends StatefulWidget {
 class _GroupCreateScreenState extends State<GroupCreateScreen> {
   String _groupName = '';
   String _groupDescription = '';
+  String _groupImageUrl = '';
   late Future<List<Genre>> _genres;
   List<int> _acceptedGenres = [];
 
@@ -87,7 +88,7 @@ class _GroupCreateScreenState extends State<GroupCreateScreen> {
       floatingActionButton: ElevatedButton(
         child: Text("Create"),
         onPressed: () {
-          Group.postCreateGroup(_groupName, _groupDescription, _acceptedGenres);
+          Group.postCreateGroup(_groupName, _groupDescription, _groupImageUrl, _acceptedGenres);
           Navigator.pop(context);
         },
       ),
@@ -127,6 +128,22 @@ class _GroupCreateScreenState extends State<GroupCreateScreen> {
                         ),
                         onChanged: (value) {
                           _groupName = value;
+                        },
+                      ),
+                      // Image
+                      Text(
+                        'Enter Groups Profile Photo:',
+                        style: TextStyle(
+                            fontSize: 18, fontWeight: FontWeight.bold
+                        ),
+                      ),
+                      TextField(
+                        maxLines: 1,
+                        decoration: InputDecoration(
+                          hintText: "Url",
+                        ),
+                        onChanged: (value) {
+                          _groupImageUrl = value;
                         },
                       ),
                       SizedBox(height: 32),
