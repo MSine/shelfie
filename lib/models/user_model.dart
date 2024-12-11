@@ -61,4 +61,17 @@ class User implements Promotable {
       throw Exception('Failed to load user');
     }
   }
+
+  static void postEdit(int userId, String description) async {
+    final Map<String, dynamic> jsonMap = {
+      'id': userId,
+      'bio': description,
+      'pp': '',
+    };
+    http.post(
+        Uri.parse('http://10.0.2.2:8080/api/user/edit/profile'),
+        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode(jsonMap)
+    );
+  }
 }

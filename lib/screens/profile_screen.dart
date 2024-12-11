@@ -20,11 +20,65 @@ class _ProfileScreenState extends State<ProfileScreen> {
     _userFuture = User.fetchUser(widget.userId);
   }
 
+  void _editProfile(String description) async {
+    User.postEdit(widget.userId, description);
+
+    setState(() {
+      _userFuture = User.fetchUser(widget.userId);
+    });
+  }
+
+  void _openEditDialog() {
+    showDialog(
+      context: context,
+      builder: (context) {
+        String description = "";
+
+        return AlertDialog(
+          title: Text("Edit Bio"),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              TextField(
+                maxLines: 3,
+                decoration: InputDecoration(
+                  hintText: "Write about yourself",
+                ),
+                onChanged: (value) {
+                  description = value;
+                },
+              ),
+            ],
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(context),
+              child: Text("Cancel"),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.pop(context);
+                _editProfile(description);
+              },
+              child: Text("Send"),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text("Profile"),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.edit),
+            onPressed: _openEditDialog,
+          ),
+        ],
       ),
       body: FutureBuilder<User>(
         future: _userFuture,
