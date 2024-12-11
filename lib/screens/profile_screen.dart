@@ -30,9 +30,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   void _openEditDialog(String name, String description, String image) {
-    if (MyApp.userId != widget.userId) {
-      return;
-    }
     showDialog(
       context: context,
       builder: (context) {
@@ -169,11 +166,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             style: TextStyle(
                                 fontSize: 24, fontWeight: FontWeight.bold),
                           ),
-                          IconButton(
+                          if (MyApp.userId == widget.userId) IconButton(
                             icon: Icon(Icons.edit),
                             onPressed: () => _openEditDialog(user.name, user.description, user.imageUrl),
                           ),
-
                         ],
                       ),
 

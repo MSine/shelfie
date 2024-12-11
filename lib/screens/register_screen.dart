@@ -29,10 +29,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
     if (_name.isEmpty || _description.isEmpty) {
       return;
     }
+    MyApp.userId = widget.userId;
 
     User.postEdit(_name, _description, _imageUrl);
 
-    MyApp.userId = widget.userId;
     Navigator.pushReplacementNamed(context, '/home');
   }
 

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:shelfie_app/widgets/user_card.dart';
+import '../main.dart';
 import '../models/group_model.dart';
 import '../models/user_model.dart';
-import '../widgets/review_card.dart';
 
 class GroupProfileScreen extends StatefulWidget {
   final int groupId;
@@ -23,6 +23,95 @@ class _GroupProfileScreenState extends State<GroupProfileScreen> {
   void initState() {
     super.initState();
     _groupFuture = Group.fetchGroup(widget.groupId);
+  }
+
+
+  void _editProfile(String name, String description, String image) async {
+    //Group.postEdit(name, description, image);
+    await Future.delayed(Duration(seconds: 1));
+    setState(() {
+      _groupFuture = Group.fetchGroup(widget.groupId);
+    });
+  }
+
+  void _openEditDialog(String name, String description, String image) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text("Edit Group"),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              // Name
+              const Text(
+                'Group Name:',
+                style: TextStyle(
+                    fontSize: 18, fontWeight: FontWeight.bold
+                ),
+              ),
+              TextFormField(
+                initialValue: name,
+                maxLines: 1,
+                decoration: InputDecoration(
+                  hintText: "Write the group name",
+                ),
+                onChanged: (value) {
+                  name = value;
+                },
+              ),
+              // Image
+              const Text(
+                'Group Profile Photo:',
+                style: TextStyle(
+                    fontSize: 18, fontWeight: FontWeight.bold
+                ),
+              ),
+              TextFormField(
+                initialValue: image,
+                maxLines: 1,
+                decoration: InputDecoration(
+                  hintText: "Enter a url",
+                ),
+                onChanged: (value) {
+                  image = value;
+                },
+              ),
+              // Description
+              const Text(
+                'About Your Group:',
+                style: TextStyle(
+                    fontSize: 18, fontWeight: FontWeight.bold
+                ),
+              ),
+              TextFormField(
+                initialValue: description,
+                maxLines: 4,
+                decoration: InputDecoration(
+                  hintText: "Write about yourself",
+                ),
+                onChanged: (value) {
+                  description = value;
+                },
+              ),
+            ],
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(context),
+              child: Text("Cancel"),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.pop(context);
+                _editProfile(name, description, image);
+              },
+              child: Text("Send"),
+            ),
+          ],
+        );
+      },
+    );
   }
 
   @override
@@ -68,17 +157,25 @@ class _GroupProfileScreenState extends State<GroupProfileScreen> {
                       ),
                     ],
                   ),
-                  SizedBox(height: 60),
+                  SizedBox(height: 16),
                   // Name and Descriptions
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 16.0),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          group.name,
-                          style: TextStyle(
-                              fontSize: 24, fontWeight: FontWeight.bold),
+                        Row(
+                          children: [
+                            Text(
+                              group.name,
+                              style: TextStyle(
+                                  fontSize: 24, fontWeight: FontWeight.bold),
+                            ),
+                            if (MyApp.userId == group.id) IconButton(
+                              icon: Icon(Icons.edit),
+                              onPressed: () => _openEditDialog(group.name, group.description, group.imageUrl),
+                            ),
+                          ],
                         ),
                         SizedBox(height: 8),
                         Text(

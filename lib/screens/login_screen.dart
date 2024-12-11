@@ -31,29 +31,24 @@ class _LoginScreenState extends State<LoginScreen> {
 
       if (user != null) {
         final String? idToken = googleSignInAuthentication.idToken;
-        //print(idToken);
-        MyApp.userId = 1;
-        Navigator.pushReplacementNamed(context, '/home');
-        return;
         final response = await http.post(
-          Uri.parse('https://10.0.2.2:8080/api/auth'),
+          Uri.parse('http://10.0.2.2:8080/api/user/auth/$idToken'),
           headers: {'Content-Type': 'application/json'},
-          body: jsonEncode({'idToken': idToken}),
         );
 
         if (response.statusCode == 200) {
           final Map<String, dynamic> responseData = jsonDecode(response.body);
           // Register
-          if (responseData['exists'] == false) {
+          if (responseData['name'] == null) {
             Navigator.pushReplacementNamed(context, '/register',
               arguments: {
-                'userId': responseData['userId'],
+                'userId': responseData['id'],
               },
             );
           }
           // Login
           else {
-            MyApp.userId = responseData['userId'];
+            MyApp.userId = responseData['id'];
             Navigator.pushReplacementNamed(context, '/home');
           }
         } else {
@@ -62,6 +57,7 @@ class _LoginScreenState extends State<LoginScreen> {
       }
     } catch (error) {
       print(error);
+      return;
     }
   }
   @override
