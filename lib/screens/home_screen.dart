@@ -25,13 +25,25 @@ class _HomeScreenState extends State<HomeScreen> {
     });
   }
 
-  void _handleAccept() {
+  void _handleAccept(Promotable promotable) {
     // Logic for accepting the group
+    if (promotable is User) {
+      User.postMatch(promotable.id, false);
+    }
+    else {
+      //Group
+    }
     _getNextItem();
   }
 
-  void _handleDecline() {
+  void _handleDecline(Promotable promotable) {
     // Logic for declining the group
+    if (promotable is User) {
+      User.postMatch(promotable.id, true);
+    }
+    else {
+      //Group
+    }
     _getNextItem();
   }
 
@@ -61,8 +73,8 @@ class _HomeScreenState extends State<HomeScreen> {
             return SingleChildScrollView(
               child: PromotedCard(
                 promotable: promotable,
-                onAccept: _handleAccept,
-                onDecline: _handleDecline,
+                onAccept: () => _handleAccept(promotable),
+                onDecline: () => _handleDecline(promotable),
               ),
             );
           }

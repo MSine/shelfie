@@ -16,8 +16,8 @@ class NotificationModel implements Promotable {
   //Factory constructor to parse JSON data
   factory NotificationModel.fromJson(Map<String, dynamic> json) {
     return NotificationModel(
-      user: User.fromJson(json['group']),
-      group: json['group'] ? Group.fromJson(json['group']) : null,
+      user: User.fromJson(json['user']),
+      group: json['group'] != null ? Group.fromJson(json['group']) : null,
     );
   }
 

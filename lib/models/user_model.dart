@@ -1,3 +1,4 @@
+import 'package:shelfie_app/main.dart';
 import 'package:shelfie_app/models/review_model.dart';
 import 'group_model.dart';
 import 'dart:convert';
@@ -62,9 +63,9 @@ class User implements Promotable {
     }
   }
 
-  static void postEdit(int userId, String description) {
+  static void postEdit(String description) {
     final Map<String, dynamic> jsonMap = {
-      'id': userId,
+      'id': MyApp.userId,
       'bio': description,
       'pp': '',
     };
@@ -75,10 +76,10 @@ class User implements Promotable {
     );
   }
 
-  static void postMatch(int userId, int otherId, bool isRejected) {
+  static void postMatch(int otherId, bool isRejected) {
     final String reject = isRejected ? 'reject/': '';
     http.post(
-        Uri.parse('http://10.0.2.2:8080/api/match/user/${reject}${userId}/${otherId}'),
+        Uri.parse('http://10.0.2.2:8080/api/match/user/${reject}${MyApp.userId}/${otherId}'),
         headers: {'Content-Type': 'application/json'},
     );
   }

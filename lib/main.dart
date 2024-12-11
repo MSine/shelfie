@@ -49,7 +49,7 @@ class MyApp extends StatelessWidget {
         '/groupCreate': (context) => GroupCreateScreen(),
         '/notifications': (context) => NotificationsScreen(),
         '/notificationDetails': (context) => NotificationDetailsScreen(
-          notification: (ModalRoute.of(context)!.settings.arguments! as Map)['groupId'],
+          notification: (ModalRoute.of(context)!.settings.arguments! as Map)['notification'],
         ),
       },
     );

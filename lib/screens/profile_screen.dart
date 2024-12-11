@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shelfie_app/models/user_model.dart';
+import '../main.dart';
 import '../widgets/review_card.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -21,7 +22,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   void _editProfile(String description) async {
-    User.postEdit(widget.userId, description);
+    User.postEdit(description);
 
     setState(() {
       _userFuture = User.fetchUser(widget.userId);
@@ -73,12 +74,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text("Profile"),
-        actions: [
+        actions:
+        MyApp.userId == widget.userId ? [
           IconButton(
             icon: Icon(Icons.edit),
             onPressed: _openEditDialog,
           ),
-        ],
+        ] : null,
       ),
       body: FutureBuilder<User>(
         future: _userFuture,

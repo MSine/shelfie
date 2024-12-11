@@ -14,11 +14,12 @@ class NotificationCard extends StatelessWidget {
     return Card(
       child: ListTile(
         title: Text("${notification.user.name} wants to match with you"),
+        //title: Text("${notification.user.name} wants to join your group: GroupName "),
         //trailing: Text("${book.rating.toStringAsFixed(1)} ★"),
         onTap: () {
           Navigator.pushNamed(
             context,
-            '/notificationDetail',
+            '/notificationDetails',
             arguments: {'notification': notification},
           );
         },
