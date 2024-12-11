@@ -40,4 +40,20 @@ class Group implements Promotable {
       throw Exception('Failed to load group');
     }
   }
+
+  // Fetch a user from the db
+  static void postCreateGroup(int userId, String name, String description, List<int> genres) async {
+    final Map<String, dynamic> jsonMap = {
+      'adminId': userId,
+      'name': name,
+      'pp': '',
+      'bio': description,
+      'genres': genres,
+    };
+    http.post(
+        Uri.parse('http://10.0.2.2:8080/api/group/create'),
+        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode(jsonMap)
+    );
+  }
 }

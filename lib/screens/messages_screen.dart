@@ -22,11 +22,49 @@ class _MessagesListScreenState extends State<MessagesListScreen> {
     _messageOverviewsFuture = MessageOverview.fetchMessageOverviews(widget.userId);
   }
 
+  void _openCreateGroup() { //Trash!!!!!!!!!!!!!!!!!
+    showDialog(
+    context: context,
+    builder: (context) {
+      String description = "";
+
+      return AlertDialog(
+        title: Text("Edit Bio"),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            TextField(
+              maxLines: 3,
+              decoration: InputDecoration(
+                hintText: "Write about yourself",
+              ),
+              onChanged: (value) {
+                description = value;
+              },
+            ),
+          ],
+        ),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.edit),
+            onPressed: _openCreateGroup,
+          ),
+        ],
+      );
+    },
+  );}
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
           title: Text("Messages")
+      ),
+      floatingActionButton: IconButton(
+        icon: Icon(Icons.add),
+        onPressed: () {
+          Navigator.pushNamed(context, '/groupCreate');
+        },
       ),
       body: FutureBuilder<List<MessageOverview>>(
         future: _messageOverviewsFuture,
@@ -63,7 +101,8 @@ class _MessagesListScreenState extends State<MessagesListScreen> {
                       'userId' : widget.userId,
                       'isGroup': messageOverview.isGroup,
                       'otherId': messageOverview.id,
-                      'name': messageOverview.name},
+                      'name': messageOverview.name
+                    },
                   );
                 },
               );

@@ -76,9 +76,9 @@ class MessageOverview {
       id: json['id'],
       name: json['name'],
       imageUrl: json['pp'],
-      lastMessageSender: json['lastMessageSender'],
-      lastMessage: json['lastMessage'],
-      time: json['time'],
+      lastMessageSender: json['lastMessageSender'] ?? '',
+      lastMessage: json['lastMessage'] ?? '',
+      time: json['time'] ?? '',
       isGroup: json['type'] == "group",
     );
   }
