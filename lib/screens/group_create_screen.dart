@@ -3,12 +3,6 @@ import '../models/genre_model.dart';
 import '../models/group_model.dart';
 
 class GroupCreateScreen extends StatefulWidget {
-  final int userId;
-
-  const GroupCreateScreen({
-    Key? key,
-    required this.userId
-  }) : super(key: key);
 
   @override
   _GroupCreateScreenState createState() => _GroupCreateScreenState();
@@ -93,7 +87,7 @@ class _GroupCreateScreenState extends State<GroupCreateScreen> {
       floatingActionButton: ElevatedButton(
         child: Text("Create"),
         onPressed: () {
-          Group.postCreateGroup(widget.userId, _groupName, _groupDescription, _acceptedGenres);
+          Group.postCreateGroup(_groupName, _groupDescription, _acceptedGenres);
           Navigator.pop(context);
         },
       ),

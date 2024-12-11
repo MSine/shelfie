@@ -45,7 +45,7 @@ class ReviewBook {
     );
   }
 
-  static void postReview(int bookId, int userId, double rating, String text) async {
+  static void postReview(int bookId, int userId, double rating, String text) {
     final Map<String, dynamic> jsonMap = {
       'bookId': bookId,
       'userId': userId,

@@ -62,7 +62,7 @@ class User implements Promotable {
     }
   }
 
-  static void postEdit(int userId, String description) async {
+  static void postEdit(int userId, String description) {
     final Map<String, dynamic> jsonMap = {
       'id': userId,
       'bio': description,
@@ -72,6 +72,14 @@ class User implements Promotable {
         Uri.parse('http://10.0.2.2:8080/api/user/edit/profile'),
         headers: {'Content-Type': 'application/json'},
         body: jsonEncode(jsonMap)
+    );
+  }
+
+  static void postMatch(int userId, int otherId, bool isRejected) {
+    final String reject = isRejected ? 'reject/': '';
+    http.post(
+        Uri.parse('http://10.0.2.2:8080/api/match/user/${reject}${userId}/${otherId}'),
+        headers: {'Content-Type': 'application/json'},
     );
   }
 }

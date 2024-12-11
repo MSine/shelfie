@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:shelfie_app/models/review_model.dart';
+import '../main.dart';
 import '../models/book_model.dart';
 import '../widgets/review_card.dart';
 
 class BookDetailScreen extends StatefulWidget {
-  final int userId;
   final int bookId;
 
   const BookDetailScreen({
     Key? key,
-    required this.userId,
     required this.bookId,
   }) : super(key: key);
 
@@ -28,7 +27,7 @@ class _BookDetailScreenState extends State<BookDetailScreen> {
   }
 
   void _addReview(double rating, String text) async {
-    ReviewBook.postReview(widget.bookId, widget.userId, rating, text);
+    ReviewBook.postReview(widget.bookId, MyApp.userId, rating, text);
 
     setState(() {
       _bookFuture = Book.fetchBook(widget.bookId);

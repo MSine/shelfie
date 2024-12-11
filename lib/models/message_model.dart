@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:shelfie_app/main.dart';
 import '../models/user_model.dart';
 import '../models/group_model.dart';
 
@@ -27,10 +28,11 @@ class MessageModel {
   }
 
   // Fetch from the db
-  static Future<(Promotable, List<MessageModel>)> fetchMessages(int userId, int otherId, bool isGroup) async {
-    final response = isGroup
-        ? await http.get(Uri.parse('http://10.0.2.2:8080/api/messages/group/$userId/$otherId'))
-        : await http.get(Uri.parse('http://10.0.2.2:8080/api/messages/user/$userId/$otherId'));
+  static Future<(Promotable, List<MessageModel>)> fetchMessages(int otherId, bool isGroup) async {
+    final String userGroupText = isGroup ? 'group' : 'user';
+    final response = await http.get(
+        Uri.parse('http://10.0.2.2:8080/api/messages/$userGroupText/${MyApp.userId}/$otherId')
+    );
     if (response.statusCode == 200) {
       final data = json.decode(response.body);
       if (data.containsKey('partner')) {
@@ -84,8 +86,8 @@ class MessageOverview {
   }
 
   // Fetch overviews from the db
-  static Future<List<MessageOverview>> fetchMessageOverviews(int userId) async {
-    final response = await http.get(Uri.parse('http://10.0.2.2:8080/api/messages/overview/$userId'));
+  static Future<List<MessageOverview>> fetchMessageOverviews() async {
+    final response = await http.get(Uri.parse('http://10.0.2.2:8080/api/messages/overview/${MyApp.userId}'));
     if (response.statusCode == 200) {
       final data = json.decode(response.body);
       return List<MessageOverview>.from(data.map((json) => MessageOverview.fromJson(json)));

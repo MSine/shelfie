@@ -7,6 +7,7 @@ import 'screens/home_screen.dart';
 import 'screens/discovery_screen.dart';
 import 'screens/book_detail_screen.dart';
 import 'screens/messages_screen.dart';
+import 'screens/notifications_screen.dart';
 import 'screens/profile_screen.dart';
 import 'widgets/navbar_bottom.dart';
 import 'screens/search_screen.dart';
@@ -19,23 +20,21 @@ void main() async {
 }
 
 class MyApp extends StatelessWidget {
+  static late int userId;
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Shelfie',
       theme: ThemeData(primarySwatch: Colors.blue),
-      //home: LoginScreen(),
       initialRoute: '/login',
       routes: {
         '/login': (context) => LoginScreen(),
         '/home': (context) => MainNavigationScreen(),
         '/bookDetail': (context) => BookDetailScreen(
-          userId: 1,
           bookId: (ModalRoute.of(context)!.settings.arguments! as Map)['bookId'],
         ),
-        '/messages': (context) => MessagesListScreen(userId: 1,),
         '/chat': (context) => ChatScreen(
-          userId: (ModalRoute.of(context)!.settings.arguments! as Map)['userId'],
           isGroup: (ModalRoute.of(context)!.settings.arguments! as Map)['isGroup'],
           otherId: (ModalRoute.of(context)!.settings.arguments! as Map)['otherId'],
           name: (ModalRoute.of(context)!.settings.arguments! as Map)['name'],
@@ -46,9 +45,7 @@ class MyApp extends StatelessWidget {
         '/groupProfile': (context) => GroupProfileScreen(
           groupId: (ModalRoute.of(context)!.settings.arguments! as Map)['groupId'],
         ),
-        '/groupCreate': (context) => GroupCreateScreen(
-          userId: 1,
-        ),
+        '/groupCreate': (context) => GroupCreateScreen(),
       },
     );
   }
@@ -66,8 +63,8 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
     SearchScreen(),
     DiscoveryScreen(),
     HomeScreen(),
-    MessagesListScreen(userId: 1,),
-    ProfileScreen(userId: 1,),
+    MessagesScreen(),
+    ProfileScreen(userId: MyApp.userId,),
   ];
 
   void _onNavBarTap(int index) {

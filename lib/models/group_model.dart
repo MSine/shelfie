@@ -1,3 +1,4 @@
+import 'package:shelfie_app/main.dart';
 import 'package:shelfie_app/models/user_model.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
@@ -42,9 +43,9 @@ class Group implements Promotable {
   }
 
   // Fetch a user from the db
-  static void postCreateGroup(int userId, String name, String description, List<int> genres) async {
+  static void postCreateGroup(String name, String description, List<int> genres) {
     final Map<String, dynamic> jsonMap = {
-      'adminId': userId,
+      'adminId': MyApp.userId,
       'name': name,
       'pp': '',
       'bio': description,

@@ -1,58 +1,19 @@
 import 'package:flutter/material.dart';
 import '../models/message_model.dart';
 
-class MessagesListScreen extends StatefulWidget {
-  final int userId;
-
-  const MessagesListScreen({
-    Key? key,
-    required this.userId
-  }) : super(key: key);
-
+class MessagesScreen extends StatefulWidget {
   @override
-  _MessagesListScreenState createState() => _MessagesListScreenState();
+  _MessagesScreenState createState() => _MessagesScreenState();
 }
 
-class _MessagesListScreenState extends State<MessagesListScreen> {
+class _MessagesScreenState extends State<MessagesScreen> {
   late Future<List<MessageOverview>> _messageOverviewsFuture;
 
   @override
   void initState() {
     super.initState();
-    _messageOverviewsFuture = MessageOverview.fetchMessageOverviews(widget.userId);
+    _messageOverviewsFuture = MessageOverview.fetchMessageOverviews();
   }
-
-  void _openCreateGroup() { //Trash!!!!!!!!!!!!!!!!!
-    showDialog(
-    context: context,
-    builder: (context) {
-      String description = "";
-
-      return AlertDialog(
-        title: Text("Edit Bio"),
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            TextField(
-              maxLines: 3,
-              decoration: InputDecoration(
-                hintText: "Write about yourself",
-              ),
-              onChanged: (value) {
-                description = value;
-              },
-            ),
-          ],
-        ),
-        actions: [
-          IconButton(
-            icon: Icon(Icons.edit),
-            onPressed: _openCreateGroup,
-          ),
-        ],
-      );
-    },
-  );}
 
   @override
   Widget build(BuildContext context) {
@@ -98,7 +59,6 @@ class _MessagesListScreenState extends State<MessagesListScreen> {
                     context,
                     '/chat',
                     arguments: {
-                      'userId' : widget.userId,
                       'isGroup': messageOverview.isGroup,
                       'otherId': messageOverview.id,
                       'name': messageOverview.name

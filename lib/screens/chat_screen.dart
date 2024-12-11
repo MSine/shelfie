@@ -1,22 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_chat_ui/flutter_chat_ui.dart';
 import 'package:flutter_chat_types/flutter_chat_types.dart' as types;
+import 'package:shelfie_app/main.dart';
 import '../models/user_model.dart';
 import '../models/message_model.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 class ChatScreen extends StatefulWidget {
-  //final Promotable promotable;
-  final int userId;
   final bool isGroup;
   final int otherId;
   final String name;
 
   const ChatScreen({
     Key? key,
-    //required this.promotable,
-    required this.userId,
     required this.isGroup,
     required this.otherId,
     required this.name,
@@ -34,7 +31,7 @@ class _ChatScreenState extends State<ChatScreen> {
   @override
   void initState() {
     super.initState();
-    _currentUser = types.User(id: widget.userId.toString());
+    _currentUser = types.User(id: MyApp.userId.toString());
     _otherUser = types.User(id: "G${widget.otherId}");
     initMessages();
   }
@@ -42,7 +39,7 @@ class _ChatScreenState extends State<ChatScreen> {
   void initMessages() async {
     try {
       final (Promotable other, List<MessageModel> messageList) =
-      await MessageModel.fetchMessages(widget.userId, widget.otherId, widget.isGroup);
+      await MessageModel.fetchMessages(widget.otherId, widget.isGroup);
 
       final newMessages = messageList.map((message) {
         final isCurrentUser = message.sender == 1;
@@ -84,7 +81,7 @@ class _ChatScreenState extends State<ChatScreen> {
     final String userGroupText = widget.isGroup ? "group" : "user";
     final Map<String, dynamic> jsonMap = {
       'text': text,
-      'sender': widget.userId,
+      'sender': MyApp.userId,
       'recv': widget.otherId,
     };
     http.post(
