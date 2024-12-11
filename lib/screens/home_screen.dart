@@ -19,7 +19,7 @@ class _HomeScreenState extends State<HomeScreen> {
     });
   }
 
-  Future<void> _getNextItem() async {
+  void _getNextItem() {
     setState(() {
       _promotable = PromotedService.getNextPromotable();
     });
@@ -40,6 +40,12 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text("Shelfie"),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.notifications),
+            onPressed: () => Navigator.pushNamed(context, '/notifications'),
+          ),
+        ],
       ),
       body: FutureBuilder<Promotable>(
         future: _promotable,

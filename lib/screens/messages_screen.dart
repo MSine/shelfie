@@ -19,7 +19,15 @@ class _MessagesScreenState extends State<MessagesScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          title: Text("Messages")
+        title: Text("Messages"),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.notifications),
+            onPressed: () {
+              Navigator.pushNamed(context, '/notifications');
+            },
+          ),
+        ],
       ),
       floatingActionButton: IconButton(
         icon: Icon(Icons.add),

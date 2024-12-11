@@ -59,14 +59,20 @@ class UserDetailsCard extends StatelessWidget {
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.red,
                   ),
-                  child: Text("Move on"),
+                  child: Text(
+                    "Decline",
+                    style: TextStyle(color: Colors.black),
+                  ),
                 ),
                 ElevatedButton(
                   onPressed: onAccept,
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.green,
                   ),
-                  child: Text("Request"),
+                  child: Text(
+                    "Accept",
+                    style: TextStyle(color: Colors.black),
+                  ),
                 ),
               ],
             ),

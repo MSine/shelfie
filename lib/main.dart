@@ -8,6 +8,7 @@ import 'screens/discovery_screen.dart';
 import 'screens/book_detail_screen.dart';
 import 'screens/messages_screen.dart';
 import 'screens/notifications_screen.dart';
+import 'screens/notification_details_screen.dart';
 import 'screens/profile_screen.dart';
 import 'widgets/navbar_bottom.dart';
 import 'screens/search_screen.dart';
@@ -46,6 +47,10 @@ class MyApp extends StatelessWidget {
           groupId: (ModalRoute.of(context)!.settings.arguments! as Map)['groupId'],
         ),
         '/groupCreate': (context) => GroupCreateScreen(),
+        '/notifications': (context) => NotificationsScreen(),
+        '/notificationDetails': (context) => NotificationDetailsScreen(
+          notification: (ModalRoute.of(context)!.settings.arguments! as Map)['groupId'],
+        ),
       },
     );
   }
