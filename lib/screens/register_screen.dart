@@ -31,7 +31,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
     }
     MyApp.userId = widget.userId;
 
-    User.postEdit(_name, _description, _imageUrl);
+    User.postEditUser(_name, _description, _imageUrl);
 
     Navigator.pushReplacementNamed(context, '/home');
   }

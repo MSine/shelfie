@@ -22,7 +22,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   void _editProfile(String name, String description, String image) async {
-    User.postEdit(name, description, image);
+    User.postEditUser(name, description, image);
     await Future.delayed(Duration(seconds: 1));
     setState(() {
       _userFuture = User.fetchUser(widget.userId);
@@ -175,12 +175,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
                       SizedBox(height: 8),
                       Text(
-                        "Favorite Genre: ${user.genre}",
+                        'Favorite Genre: ${user.genre ?? '' }',
                         style: TextStyle(fontSize: 16, color: Colors.grey[700]),
                       ),
                       SizedBox(height: 8),
                       Text(
-                        "About Me:",
+                        'About Me:',
                         style: TextStyle(
                             fontSize: 18, fontWeight: FontWeight.bold),
                       ),

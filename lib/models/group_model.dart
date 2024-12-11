@@ -5,6 +5,7 @@ import 'package:http/http.dart' as http;
 
 class Group implements Promotable {
   final int id;
+  final int adminId;
   final String name;
   final String imageUrl;
   final String description;
@@ -12,6 +13,7 @@ class Group implements Promotable {
 
   Group({
     required this.id,
+    required this.adminId,
     required this.name,
     required this.imageUrl,
     required this.description,
@@ -21,6 +23,7 @@ class Group implements Promotable {
   factory Group.fromJson(Map<String, dynamic> json) {
     return Group(
       id: json['id'],
+      adminId: json['admin'],
       name: json['name'],
       imageUrl: json['pp'],
       description: json['bio'] ?? "No description",
@@ -53,6 +56,20 @@ class Group implements Promotable {
     };
     http.post(
         Uri.parse('http://10.0.2.2:8080/api/group/create'),
+        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode(jsonMap)
+    );
+  }
+
+  static void postEditGroup(int id, String name, String description, String image) {
+    final Map<String, dynamic> jsonMap = {
+      'id': id,
+      'name': name,
+      'bio': description,
+      'pp': image,
+    };
+    http.post(
+        Uri.parse('http://10.0.2.2:8080/api/group/edit'),
         headers: {'Content-Type': 'application/json'},
         body: jsonEncode(jsonMap)
     );

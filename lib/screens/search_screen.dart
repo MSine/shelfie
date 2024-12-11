@@ -12,19 +12,11 @@ class _SearchScreenState extends State<SearchScreen> {
   String _searchQuery = '';
 
   final List<String> _recentSearches = [
-    "The Hobbit",
-    "1984",
-    "Dune",
+    "The Warriors",
+    "Apocolocyntosis",
+    "Contes Dune Grandmre",
     "Pride and Prejudice",
-    "The Catcher in the Rye"
-  ];
-
-  final List<String> _hotSearches = [
-    "A Song of Ice and Fire",
-    "Harry Potter",
-    "The Great Gatsby",
-    "Moby Dick",
-    "The Alchemist"
+    "Catchisme Libertin"
   ];
 
   List<Book> _books = [];
@@ -92,30 +84,6 @@ class _SearchScreenState extends State<SearchScreen> {
                         onTap: () {
                           _searchController.text = _recentSearches[index];
                           _onSearchChanged(_recentSearches[index]);
-                        },
-                      );
-                    },
-                  ),
-                  SizedBox(height: 16),
-                  // Hot Searches
-                  const Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 16.0),
-                    child: Text(
-                      "Today's Hot Searches",
-                      style: TextStyle(
-                          fontSize: 18, fontWeight: FontWeight.bold),
-                    ),
-                  ),
-                  ListView.builder(
-                    shrinkWrap: true,
-                    physics: NeverScrollableScrollPhysics(),
-                    itemCount: _hotSearches.length,
-                    itemBuilder: (context, index) {
-                      return ListTile(
-                        title: Text(_hotSearches[index]),
-                        onTap: () {
-                          _searchController.text = _hotSearches[index];
-                          _onSearchChanged(_hotSearches[index]);
                         },
                       );
                     },

@@ -63,7 +63,7 @@ class User implements Promotable {
     }
   }
 
-  static void postEdit(String name, String description, String image) {
+  static void postEditUser(String name, String description, String image) {
     final Map<String, dynamic> jsonMap = {
       'id': MyApp.userId,
       'name': name,
