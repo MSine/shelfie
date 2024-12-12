@@ -43,7 +43,7 @@ class _ChatScreenState extends State<ChatScreen> {
 
       final newMessages = messageList.map((message) {
         final isCurrentUser = message.sender == 1;
-        final displayText = widget.isGroup && message.sender == 0
+        final displayText = widget.isGroup && !isCurrentUser
             ? '${message.senderName}:\n${message.text}'
             : message.text;
         return types.TextMessage(
@@ -85,7 +85,7 @@ class _ChatScreenState extends State<ChatScreen> {
       'recv': widget.otherId,
     };
     http.post(
-        Uri.parse('http://10.0.2.2:8080/api/messages/${userGroupText}/send'),
+        Uri.parse('${MyApp.serverIp}/api/messages/${userGroupText}/send'),
         headers: {'Content-Type': 'application/json'},
         body: jsonEncode(jsonMap)
     );

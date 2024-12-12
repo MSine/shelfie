@@ -24,7 +24,7 @@ class NotificationModel implements Promotable {
   // Fetch a user from the db
   static Future<List<NotificationModel>> fetchNotifications() async {
     final response = await http.get(
-        Uri.parse('http://10.0.2.2:8080/api/match/all/${MyApp.userId}'));
+        Uri.parse('${MyApp.serverIp}/api/match/all/${MyApp.userId}'));
     if (response.statusCode == 200) {
       final data = json.decode(response.body);
       return List<NotificationModel>.from(data.map((json) => NotificationModel.fromJson(json)));

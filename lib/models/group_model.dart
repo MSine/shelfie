@@ -36,7 +36,7 @@ class Group implements Promotable {
 
   // Fetch a user from the db
   static Future<Group> fetchGroup(int groupId) async {
-    final response = await http.get(Uri.parse('http://10.0.2.2:8080/api/group/$groupId'));
+    final response = await http.get(Uri.parse('${MyApp.serverIp}/api/group/$groupId'));
     if (response.statusCode == 200) {
       final data = json.decode(response.body);
       return Group.fromJson(data);
@@ -55,7 +55,7 @@ class Group implements Promotable {
       'genres': genres,
     };
     http.post(
-        Uri.parse('http://10.0.2.2:8080/api/group/create'),
+        Uri.parse('${MyApp.serverIp}/api/group/create'),
         headers: {'Content-Type': 'application/json'},
         body: jsonEncode(jsonMap)
     );
@@ -69,9 +69,17 @@ class Group implements Promotable {
       'pp': image,
     };
     http.post(
-        Uri.parse('http://10.0.2.2:8080/api/group/edit'),
+        Uri.parse('${MyApp.serverIp}/api/group/edit'),
         headers: {'Content-Type': 'application/json'},
         body: jsonEncode(jsonMap)
+    );
+  }
+
+  static void postMatch(int otherId, int groupId, bool isRejected) {
+    final String reject = isRejected ? 'reject/': '';
+    http.post(
+      Uri.parse('${MyApp.serverIp}/api/match/group/$reject$otherId/$groupId'),
+      headers: {'Content-Type': 'application/json'},
     );
   }
 }

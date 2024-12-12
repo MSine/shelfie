@@ -54,7 +54,7 @@ class User implements Promotable {
 
   // Fetch a user from the db
   static Future<User> fetchUser(int userId) async {
-    final response = await http.get(Uri.parse('http://10.0.2.2:8080/api/user/$userId'));
+    final response = await http.get(Uri.parse('${MyApp.serverIp}/api/user/$userId'));
     if (response.statusCode == 200) {
       final data = json.decode(response.body);
       return User.fromJson(data);
@@ -71,7 +71,7 @@ class User implements Promotable {
       'pp': image,
     };
     http.post(
-        Uri.parse('http://10.0.2.2:8080/api/user/edit/profile'),
+        Uri.parse('${MyApp.serverIp}/api/user/edit/profile'),
         headers: {'Content-Type': 'application/json'},
         body: jsonEncode(jsonMap)
     );
@@ -80,7 +80,7 @@ class User implements Promotable {
   static void postMatch(int otherId, bool isRejected) {
     final String reject = isRejected ? 'reject/': '';
     http.post(
-        Uri.parse('http://10.0.2.2:8080/api/match/user/${reject}${MyApp.userId}/${otherId}'),
+        Uri.parse('${MyApp.serverIp}/api/match/user/$reject${MyApp.userId}/$otherId'),
         headers: {'Content-Type': 'application/json'},
     );
   }

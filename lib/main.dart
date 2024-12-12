@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:shelfie_app/screens/chat_screen.dart';
 import 'package:shelfie_app/screens/group_create_screen.dart';
 import 'package:shelfie_app/screens/group_profile_screen.dart';
+import 'screens/ip_screen.dart';
 import 'screens/login_screen.dart';
 import 'screens/register_screen.dart';
 import 'screens/home_screen.dart';
@@ -23,14 +24,16 @@ void main() async {
 
 class MyApp extends StatelessWidget {
   static late int userId;
+  static late String serverIp;
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Shelfie',
       theme: ThemeData(primarySwatch: Colors.blue),
-      initialRoute: '/login',
+      initialRoute: '/ip',
       routes: {
+        '/ip': (context) => IpScreen(),
         '/login': (context) => LoginScreen(),
         '/register': (context) => RegisterScreen(
           userId: (ModalRoute.of(context)!.settings.arguments! as Map)['userId'],

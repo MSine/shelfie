@@ -32,7 +32,7 @@ class _LoginScreenState extends State<LoginScreen> {
       if (user != null) {
         final String? idToken = googleSignInAuthentication.idToken;
         final response = await http.post(
-          Uri.parse('http://10.0.2.2:8080/api/user/auth/$idToken'),
+          Uri.parse('${MyApp.serverIp}/api/user/auth/$idToken'),
           headers: {'Content-Type': 'application/json'},
         );
 

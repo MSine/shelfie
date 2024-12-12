@@ -31,7 +31,7 @@ class MessageModel {
   static Future<(Promotable, List<MessageModel>)> fetchMessages(int otherId, bool isGroup) async {
     final String userGroupText = isGroup ? 'group' : 'user';
     final response = await http.get(
-        Uri.parse('http://10.0.2.2:8080/api/messages/$userGroupText/${MyApp.userId}/$otherId')
+        Uri.parse('${MyApp.serverIp}/api/messages/$userGroupText/${MyApp.userId}/$otherId')
     );
     if (response.statusCode == 200) {
       final data = json.decode(response.body);
@@ -87,7 +87,7 @@ class MessageOverview {
 
   // Fetch overviews from the db
   static Future<List<MessageOverview>> fetchMessageOverviews() async {
-    final response = await http.get(Uri.parse('http://10.0.2.2:8080/api/messages/overview/${MyApp.userId}'));
+    final response = await http.get(Uri.parse('${MyApp.serverIp}/api/messages/overview/${MyApp.userId}'));
     if (response.statusCode == 200) {
       final data = json.decode(response.body);
       return List<MessageOverview>.from(data.map((json) => MessageOverview.fromJson(json)));

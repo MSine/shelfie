@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shelfie_app/models/notification_model.dart';
 import 'package:shelfie_app/models/user_model.dart';
+import '../models/group_model.dart';
 import '../widgets/review_card.dart';
 
 class NotificationDetailsScreen extends StatefulWidget {
@@ -18,23 +19,21 @@ class NotificationDetailsScreen extends StatefulWidget {
 class _NotificationDetailsScreenState extends State<NotificationDetailsScreen> {
 
   void _onAccept() {
-    // Logic for accepting the group
     if (widget.notification.group == null) {
       User.postMatch(widget.notification.user.id, false);
     }
     else {
-      //Group.postMatch
+      Group.postMatch(widget.notification.user.id, widget.notification.group!.id, false);
     }
     Navigator.pop(context);
   }
 
   void _onDecline() {
-    // Logic for declining the group
     if (widget.notification.group == null) {
       User.postMatch(widget.notification.user.id, true);
     }
     else {
-      //Group.postMatch
+      Group.postMatch(widget.notification.user.id, widget.notification.group!.id, true);
     }
     Navigator.pop(context);
   }
@@ -65,7 +64,29 @@ class _NotificationDetailsScreenState extends State<NotificationDetailsScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // Group Name
+                  // Profile Image
+                  Stack(
+                    children: [
+                      Container(
+                        width: double.infinity,
+                        height: 220,
+                        color: Colors.blue[100],
+                      ),
+                      Positioned(
+                        top: 10,
+                        left: MediaQuery
+                            .of(context)
+                            .size
+                            .width / 2 - 100,
+                        child: CircleAvatar(
+                          radius: 100,
+                          backgroundImage: NetworkImage(user.imageUrl),
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 16),
+                  // Name
                   Padding(
                     padding: const EdgeInsets.all(16.0),
                     child: Text(

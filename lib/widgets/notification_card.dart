@@ -13,9 +13,9 @@ class NotificationCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       child: ListTile(
-        title: Text("${notification.user.name} wants to match with you"),
-        //title: Text("${notification.user.name} wants to join your group: GroupName "),
-        //trailing: Text("${book.rating.toStringAsFixed(1)} ★"),
+        title: notification.group == null
+            ? Text("${notification.user.name} wants to match with you")
+            : Text("${notification.user.name} wants to join your group: ${notification.group?.name} "),
         onTap: () {
           Navigator.pushNamed(
             context,

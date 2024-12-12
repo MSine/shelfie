@@ -1,6 +1,8 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
+import '../main.dart';
+
 class ReviewUser {
   final String title;
   final String author;
@@ -53,7 +55,7 @@ class ReviewBook {
       'text': text,
     };
     http.post(
-        Uri.parse('http://10.0.2.2:8080/api/book/review'),
+        Uri.parse('${MyApp.serverIp}/api/book/review'),
         headers: {'Content-Type': 'application/json'},
         body: jsonEncode(jsonMap)
     );

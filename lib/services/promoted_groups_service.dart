@@ -7,26 +7,23 @@ import '../models/group_model.dart';
 
 class PromotedService {
   static Future<Promotable> getPromotable() async {
-    final response = await http.get(
-        Uri.parse('http://10.0.2.2:8080/api/match/get/group/${MyApp.userId}')
-    );
-    final data = json.decode(response.body);
-    return Group.fetchGroup(data['id']);
-  }
-  static Future<Promotable> getNextPromotable() {
-    return User.fetchUser(2);
+    return getUser();
   }
 
-  Future<Group> getGroup() async {
+  static Future<Promotable> getNextPromotable() {
+    return getGroup();
+  }
+
+  static Future<Group> getGroup() async {
     final response = await http.get(
-        Uri.parse('http://10.0.2.2:8080/api/match/get/group/${MyApp.userId}')
+        Uri.parse('${MyApp.serverIp}/api/match/get/group/${MyApp.userId}')
     );
     return Group.fetchGroup(json.decode(response.body)['id']);
   }
 
-  Future<User> getUser() async {
+  static Future<User> getUser() async {
     final response = await http.get(
-        Uri.parse('http://10.0.2.2:8080/api/match/get/user/${MyApp.userId}')
+        Uri.parse('${MyApp.serverIp}/api/match/get/user/${MyApp.userId}')
     );
     return User.fetchUser(json.decode(response.body)['id']);
   }

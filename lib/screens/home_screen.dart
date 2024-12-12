@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:shelfie_app/main.dart';
 import 'package:shelfie_app/models/user_model.dart';
+import '../models/group_model.dart';
 import '../widgets/promoted_card.dart';
 import '../services/promoted_groups_service.dart';
 
@@ -31,7 +33,7 @@ class _HomeScreenState extends State<HomeScreen> {
       User.postMatch(promotable.id, false);
     }
     else {
-      //Group
+      Group.postMatch(MyApp.userId, (promotable as Group).id, false);
     }
     _getNextItem();
   }
@@ -42,7 +44,7 @@ class _HomeScreenState extends State<HomeScreen> {
       User.postMatch(promotable.id, true);
     }
     else {
-      //Group
+      Group.postMatch(MyApp.userId, (promotable as Group).id, true);
     }
     _getNextItem();
   }

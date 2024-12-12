@@ -2,6 +2,8 @@ import 'package:shelfie_app/models/review_model.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
+import '../main.dart';
+
 class Book {
   final int id;
   final String title;
@@ -36,7 +38,7 @@ class Book {
 
   // Fetch books from the db
   static Future<List<Book>> fetchBookSearch(String str) async {
-    final response = await http.get(Uri.parse('http://10.0.2.2:8080/api/book/search/$str'));
+    final response = await http.get(Uri.parse('${MyApp.serverIp}/api/book/search/$str'));
     if (response.statusCode == 200) {
       final data = json.decode(response.body);
       return List<Book>.from(data.map((i) => Book.fromJson(i)));
@@ -46,7 +48,7 @@ class Book {
   }
 
   static Future<Book> fetchBook(int bookId) async {
-    final response = await http.get(Uri.parse('http://10.0.2.2:8080/api/book/$bookId'));
+    final response = await http.get(Uri.parse('${MyApp.serverIp}/api/book/$bookId'));
     if (response.statusCode == 200) {
       final data = json.decode(response.body);
       return Book.fromJson(data);
